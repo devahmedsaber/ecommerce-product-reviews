@@ -34,7 +34,7 @@ Before running the project, ensure you have the following installed:
           - DB_CONNECTION=mysql
           - DB_HOST=127.0.0.1
           - DB_PORT=3306
-          - DB_DATABASE=your_database_name => like (todo_list_app)
+          - DB_DATABASE=your_database_name => like (ecommerce_product_reviews)
           - DB_USERNAME=your_database_user => like (root)
           - DB_PASSWORD=your_database_password
 4. Generate the application key by running this command bash:
