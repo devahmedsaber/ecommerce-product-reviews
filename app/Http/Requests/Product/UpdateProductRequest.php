@@ -22,9 +22,10 @@ class UpdateProductRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'name'        => 'sometimes|required|string|max:255',
+            'name' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
-            'price'       => 'sometimes|required|numeric|min:0',
+            'price' => 'sometimes|required|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ];
     }
 }

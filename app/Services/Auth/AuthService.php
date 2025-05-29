@@ -18,14 +18,14 @@ class AuthService
         return $this->authRepository->register($data);
     }
 
-    public function login(array $credentials)
+    public function login(array $data)
     {
-        return $this->authRepository->login($credentials);
+        return $this->authRepository->login($data);
     }
 
-    public function me()
+    public function profile()
     {
-        return $this->authRepository->me();
+        return $this->authRepository->profile();
     }
 
     public function logout()

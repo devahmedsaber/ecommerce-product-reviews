@@ -25,34 +25,26 @@ class AuthController extends Controller
     public function register(UserRegisterRequest $request)
     {
         $data = $request->validated();
-
         $user = $this->authService->register($data);
-
-        return $this->success('User Registered Successfully', new UserDataResource($user));
+        return $this->success(__('auth.registered'), new UserDataResource($user));
     }
 
     public function login(UserLoginRequest $request)
     {
-        $credentials = $request->validated();
-
-        $user = $this->authService->login($credentials);
-
-        if (!$user) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
-        }
-
-        return $this->success('User Logged In Successfully', new UserDataResource($user));
+        $data = $request->validated();
+        $user = $this->authService->login($data);
+        return $this->success(__('auth.logged_in'), new UserDataResource($user));
     }
 
-    public function me()
+    public function profile()
     {
-        $user = $this->authService->me();
-        return $this->success('User Profile Retrieved', new UserProfileResource($user));
+        $user = $this->authService->profile();
+        return $this->success(__('auth.profile_retrieved'), new UserProfileResource($user));
     }
 
     public function logout()
     {
         $this->authService->logout();
-        return $this->success('User Logged Out Successfully');
+        return $this->success(__('auth.logged_out'));
     }
 }

@@ -21,7 +21,7 @@ class UserDataResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'role' => $this->role,
-            'token' => JWTAuth::fromUser(auth()->user()),
+            'token' => JWTAuth::fromUser($this->resource),
         ];
     }
 }

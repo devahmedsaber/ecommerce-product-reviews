@@ -24,37 +24,32 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        return $this->success('Products Retrieved Successfully', new ProductCollectionResource($this->productService->all($request)));
+        return $this->success(__('products.retrieved'), new ProductCollectionResource($this->productService->all($request)));
     }
 
     public function show($id)
     {
         $product = $this->productService->find($id);
-
-        if (!$product) {
-            return $this->error(message: 'Product Not Found');
-        }
-
-        return $this->success('Product Retrieved Successfully', new ProductResource($product));
+        return $this->success(__('products.showed'), new ProductResource($product));
     }
 
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
         $product = $this->productService->create($data);
-        return $this->success('Product Created Successfully', new ProductResource($product));
+        return $this->success(__('products.created'), new ProductResource($product));
     }
 
     public function update(UpdateProductRequest $request, $id)
     {
         $data = $request->validated();
         $product = $this->productService->update($id, $data);
-        return $this->success('Product Updated Successfully', new ProductResource($product));
+        return $this->success(__('products.updated'), new ProductResource($product));
     }
 
     public function destroy($id)
     {
         $this->productService->delete($id);
-        return $this->success('Product Deleted Successfully');
+        return $this->success(__('products.deleted'));
     }
 }

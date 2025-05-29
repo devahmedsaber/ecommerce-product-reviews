@@ -8,39 +8,34 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthRepository implements AuthRepositoryInterface
 {
-    /**
-     * User register.
-     *
-     * @param array $data
-     * @return mixed
-     */
+    protected $user;
+
+    public function __construct()
+    {
+        $this->user = new User();
+    }
+
     public function register(array $data)
     {
-        $user = User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
+        $user = $this->user->create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'role' => $data['role'] ?? 'user',
             'password' => bcrypt($data['password']),
         ]);
-
+        auth()->login($user);
         return $user;
     }
 
-    /**
-     * User login.
-     *
-     * @param array $credentials
-     * @return mixed
-     */
-    public function login(array $credentials)
+    public function login(array $data)
     {
-        if (! auth()->attempt($credentials)) {
+        if (!auth()->attempt($data)) {
             throw new GeneralException(__('auth.failed'), 401);
         }
-
         return auth()->user();
     }
 
-    public function me()
+    public function profile()
     {
         return auth()->user();
     }

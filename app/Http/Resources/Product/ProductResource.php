@@ -20,6 +20,7 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
+            'image' => $this->image,
             'reviews_avg_rating' => round((float) $this->reviews_avg_rating, 1),
             'reviews' => $this->reviews,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),

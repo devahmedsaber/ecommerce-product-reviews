@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Review;
 
+use App\Exceptions\GeneralException;
 use App\Http\Requests\ApiRequest;
+use App\Models\Review;
 
 class UpdateReviewRequest extends ApiRequest
 {
@@ -11,8 +13,12 @@ class UpdateReviewRequest extends ApiRequest
      */
     public function authorize(): bool
     {
-        $review = $this->route('review'); // Model binding
-        return auth()->check() && auth()->id() === $review->user_id;
+        $reviewId = $this->route('id');
+        $review = Review::find($reviewId);
+        if (!$review) {
+            throw new GeneralException(__('reviews.not_found'), 404);
+        }
+        return auth()->check() && auth()->id() === $review?->user_id;
     }
 
     /**
@@ -23,7 +29,7 @@ class UpdateReviewRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'rating'  => 'sometimes|required|integer|min:1|max:5',
+            'rating' => 'sometimes|required|integer|min:1|max:5',
             'comment' => 'nullable|string',
         ];
     }
